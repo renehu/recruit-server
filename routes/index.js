@@ -11,7 +11,6 @@ router.get("/", function (req, res, next) {
   res.render("index", { title: "Express" });
 });
 
-// user register
 router.post("/register", function (req, res, next) {
   const { username, password, type } = req.body;
 
@@ -31,7 +30,6 @@ router.post("/register", function (req, res, next) {
   });
 });
 
-// login
 router.post("/login", function (req, res) {
   const { username, password } = req.body;
 
@@ -46,6 +44,34 @@ router.post("/login", function (req, res) {
         res.send({ code: 0, data: data });
       } else {
         res.send({ code: 1, msg: "Username or password error" });
+      }
+    }
+  );
+});
+
+router.post("/update", function (req, res) {
+  // get userid from cookie
+  const userid = req.cookies.userid;
+
+  if (!userid) {
+    return res.send({ code: 1, msg: "Please login" });
+  }
+
+  const user = req.body;
+
+  UserModel.findByIdAndUpdate(
+    { _id: userid },
+    user,
+    function (err, originalUserDoc) {
+      if (!originalUserDoc) {
+        //if the database has been tampered, clear the cookie
+        res.clearCookie("userid");
+        res.send({ code: 1, msg: "Please login" });
+      } else {
+        const { _id, username, type } = originalUserDoc;
+        // combine the props
+        const data = Object.assign(user, { _id, username, type });
+        res.send({ code: 0, data: data });
       }
     }
   );
