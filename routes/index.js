@@ -13,7 +13,7 @@ router.get("/", function (req, res, next) {
   res.render("index", { title: "Express" });
 });
 
-router.post("/register", function (req, res, next) {
+router.post("/api/register", function (req, res, next) {
   const { username, password, type } = req.body;
 
   UserModel.findOne({ username }, function (err, userDoc) {
@@ -32,7 +32,7 @@ router.post("/register", function (req, res, next) {
   });
 });
 
-router.post("/login", function (req, res) {
+router.post("/api/login", function (req, res) {
   const { username, password } = req.body;
 
   UserModel.findOne(
@@ -51,7 +51,7 @@ router.post("/login", function (req, res) {
   );
 });
 
-router.post("/update", function (req, res) {
+router.post("/api/update", function (req, res) {
   // get userid from cookie
   const userid = req.cookies.userid;
 
@@ -79,7 +79,7 @@ router.post("/update", function (req, res) {
   );
 });
 
-router.get("/user", function (req, res) {
+router.get("/api/user", function (req, res) {
   const userid = req.cookies.userid;
 
   if (!userid) {
