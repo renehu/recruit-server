@@ -6,7 +6,7 @@ const md5 = require("blueimp-md5");
 
 var router = express.Router();
 
-const filter = { password: 0, __v: 0 };
+const filter = { password: 0, __v: 0 }; // filter password value
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
@@ -77,6 +77,22 @@ router.post("/update", function (req, res) {
       }
     }
   );
+});
+
+router.get("/user", function (req, res) {
+  const userid = req.cookies.userid;
+
+  if (!userid) {
+    return res.send({ code: 1, msg: "Please login" });
+  }
+
+  UserModel.findOne({ _id: userid }, filter, function (err, userDoc) {
+    if (userDoc) {
+      res.send({ code: 0, data: userDoc });
+    } else {
+      res.send({ code: 1, msg: `${err}` });
+    }
+  });
 });
 
 module.exports = router;
