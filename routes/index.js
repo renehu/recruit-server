@@ -95,4 +95,11 @@ router.get("/api/user", function (req, res) {
   });
 });
 
+router.get("/api/userlist", function (req, res) {
+  const { type } = req.query;
+  UserModel.find({ type }, filter, function (err, userDocArray) {
+    res.send({ code: 0, data: userDocArray });
+  });
+});
+
 module.exports = router;
