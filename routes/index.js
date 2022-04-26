@@ -1,7 +1,7 @@
 // all API here
 
 var express = require("express");
-const { UserModel } = require("../db/models");
+const { UserModel, ChatModel } = require("../db/models");
 const md5 = require("blueimp-md5");
 
 var router = express.Router();
@@ -13,6 +13,7 @@ router.get("/", function (req, res, next) {
   res.render("index", { title: "Express" });
 });
 
+/* User API */
 router.post("/api/register", function (req, res, next) {
   const { username, password, type } = req.body;
 
@@ -100,6 +101,61 @@ router.get("/api/userlist", function (req, res) {
   UserModel.find({ type }, filter, function (err, userDocArray) {
     res.send({ code: 0, data: userDocArray });
   });
+});
+
+/* Chat API */
+// get msg list, userid from cookie, return user obj and chatMsg array
+router.get("/api/msglist", function (req, res) {
+  // find all users and put in users obj
+  UserModel.find(function (err, userDocs) {
+    // arr.focEach way
+    const users = {}; // userDocs is arrary, so we need a new object to put result
+    userDocs.forEach((userDoc) => {
+      // forEach executes a provided function once for each array element.
+      users[userDoc._id] = {
+        username: userDoc.username,
+        avatar: userDoc.avatar,
+      };
+    });
+
+    // arr.reduce way
+    // const users = userDocs.reduce((users, userDoc) => {
+    //   users = users[userDoc._id] = {
+    //     username: userDoc.username,
+    //     avatar: userDoc.avatar,
+    //   };
+    //   return users;
+    // }, {});
+
+    // find all chats this userid related whether from or to
+    const userid = req.cookies.userid;
+
+    ChatModel.find(
+      {
+        $or: [{ from: userid }, { to: userid }],
+      },
+      filter,
+      function (err, chatMsgs) {
+        res.send({ code: 0, data: { users, chatMsgs } });
+      }
+    );
+  });
+});
+
+// mark msg as read
+router.post("/api/msgread", function (req, res) {
+  const from = req.body.from;
+  const to = req.cookies.userid;
+
+  ChatModel.updateMany(
+    { from, to, read: false },
+    { read: true },
+    { multi: true },
+    function (err, doc) {
+      console.log("/api/msgread:", doc);
+      res.send({ code: 0, data: doc.nModified ?? null });
+    }
+  );
 });
 
 module.exports = router;
