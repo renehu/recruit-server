@@ -60,4 +60,12 @@ function testDelete() {
   });
 }
 
-testDelete();
+//testDelete();
+
+function removeAutoCreatedData() {
+  UserModel.remove({ avatar: null }, function (err, doc) {
+    console.log("removeAllTestData", err, doc);
+  });
+}
+
+//removeAutoCreatedData();
