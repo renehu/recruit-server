@@ -12,6 +12,8 @@ var app = express();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+//debug
+//app.set('trust proxy', '127.0.0.1');
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -31,6 +33,8 @@ app.use(function(req, res, next) {
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
+  //debug
+  //res.locals.error =err;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
   // render the error page

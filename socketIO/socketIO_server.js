@@ -4,6 +4,10 @@ module.exports = function (server) {
   // got IO object
   const io = require("socket.io")(server);
 
+  io.on("connect_error", (err) => {
+    console.log(`connect_error due to ${err.message}`);
+  });
+
   // monitor the connection(when a user conneted, do callback )
   io.on("connection", function (socket) {
     console.log("SoketIO connected");
