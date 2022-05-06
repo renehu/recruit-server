@@ -6,6 +6,8 @@ const md5 = require("blueimp-md5");
 
 var router = express.Router();
 
+const logger = require("../utils/logger");
+
 const filter = { password: 0, __v: 0 }; // filter password value
 
 /* GET home page. */
@@ -20,14 +22,25 @@ router.post("/api/register", function (req, res, next) {
   UserModel.findOne({ username }, function (err, userDoc) {
     if (userDoc) {
       res.send({ code: 1, msg: "The user already exists" });
+      logger.info(
+        `username ${username} tried to register but failed due to already exists`
+      );
     } else {
-      new UserModel({ username, type, password: md5(password) }).save(function (
-        error,
-        userDoc
-      ) {
-        res.cookie("userid", userDoc._id, { maxAge: 1000 * 60 * 60 * 24 }); //1 day
-        const data = { username, type, _id: userDoc._id };
-        res.send({ code: 0, data: data });
+      const create_time = Date.now();
+      new UserModel({
+        username,
+        type,
+        password: md5(password),
+        create_time,
+      }).save(function (error, userDoc) {
+        if (error) {
+          logger.error(`user registered error ${error}"`);
+        } else {
+          logger.info(`new user ${username} registered,  type:${type}`);
+          res.cookie("userid", userDoc._id, { maxAge: 1000 * 60 * 60 * 24 }); //1 day
+          const data = { username, type, _id: userDoc._id };
+          res.send({ code: 0, data: data });
+        }
       });
     }
   });
@@ -45,8 +58,13 @@ router.post("/api/login", function (req, res) {
 
         const data = userDoc;
         res.send({ code: 0, data: data });
+
+        logger.info(`username:${username} logined`);
       } else {
         res.send({ code: 1, msg: "Username or password error" });
+        logger.info(
+          `username:${username} failed to login with wrong username or password`
+        );
       }
     }
   );

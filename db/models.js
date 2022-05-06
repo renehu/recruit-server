@@ -1,8 +1,13 @@
 const mongoose = require("mongoose");
 mongoose.connect("mongodb://localhost:27017/MongoDB");
+
+const logger = require("../utils/logger");
+
 const connection = mongoose.connection;
+
 connection.on("connected", () => {
   console.log("DB connected!");
+  //logger.info("DB conected.");
 });
 
 // user
@@ -16,6 +21,7 @@ const userSchema = mongoose.Schema({
   salary: { type: String },
   location: { type: String },
   info: { type: String },
+  create_time: { type: Number },
 });
 
 const UserModel = mongoose.model("user", userSchema);

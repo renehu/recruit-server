@@ -22,5 +22,5 @@ yarn-error.log*
 
 db/db_test.js
 /cert
-
+/logs
 
