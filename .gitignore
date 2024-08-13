@@ -24,3 +24,8 @@ db/db_test.js
 /cert
 /logs
 
+vercel.json
+/.vercel
+/db/config.js
+.env
+
