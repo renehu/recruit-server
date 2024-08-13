@@ -21,6 +21,11 @@ yarn-debug.log*
 yarn-error.log*
 
 db/db_test.js
+db/config.js
 /cert
 /logs
 
+vercel.json
+/.vercel
+
+.env
