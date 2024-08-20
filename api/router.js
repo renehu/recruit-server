@@ -12,7 +12,7 @@ const logger = require("../utils/logger");
 const filter = { password: 0, __v: 0 }; // filter password value
 
 const cors = require("cors");
-app.use(
+router.use(
   cors({
     origin: "https://renehu.net",
     methods: ["GET", "POST"],
