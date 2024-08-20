@@ -1,6 +1,7 @@
 // all API here
 
 var express = require("express");
+
 const { UserModel, ChatModel } = require("../db/models");
 const md5 = require("blueimp-md5");
 
@@ -9,6 +10,14 @@ var router = express.Router();
 const logger = require("../utils/logger");
 
 const filter = { password: 0, __v: 0 }; // filter password value
+
+const cors = require("cors");
+app.use(
+  cors({
+    origin: "https://renehu.net",
+    methods: ["GET", "POST"],
+  })
+);
 
 /* GET home page. */
 router.get("/", function (req, res, next) {

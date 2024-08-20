@@ -2,10 +2,10 @@ const winston = require("winston");
 const path = require("path");
 const fs = require("fs");
 
-// 定义日志目录路径
+// define the log file dir
 const logDir = path.join(__dirname, "../logs");
 
-// 如果不是生产环境，确保日志目录存在
+// if not prod env, make sure the log dir is exist
 if (process.env.NODE_ENV !== "production" && !fs.existsSync(logDir)) {
   fs.mkdirSync(logDir);
 }
