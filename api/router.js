@@ -16,8 +16,16 @@ router.use(
   cors({
     origin: "https://renehu.net",
     methods: ["GET", "POST"],
+    credentials: true, //Access-Control-Allow-Credentials
   })
 );
+
+//add header to unblock CORS
+router.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "https://renehu.net");
+  res.header("Access-Control-Allow-Credentials", "true");
+  next();
+});
 
 /* GET home page. */
 router.get("/", function (req, res, next) {

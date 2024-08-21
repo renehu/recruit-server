@@ -2,7 +2,13 @@ const { ChatModel } = require("../db/models");
 
 module.exports = function (server) {
   // got IO object
-  const io = require("socket.io")(server);
+  const io = require("socket.io")(server, {
+    cors: {
+      origin: "https://renehu.net",
+      methods: ["GET", "POST"],
+      credentials: true,
+    },
+  });
 
   io.on("connect_error", (err) => {
     console.log(`connect_error due to ${err.message}`);
