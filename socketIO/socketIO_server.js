@@ -4,7 +4,7 @@ module.exports = function (server) {
   // got IO object
   const io = require("socket.io")(server, {
     cors: {
-      origin: "https://renehu.net",
+      origin: ["https://renehu.net", "https://recruit.renehu.net"],
       methods: ["GET", "POST"],
       credentials: true,
     },
