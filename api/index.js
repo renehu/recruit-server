@@ -60,14 +60,18 @@ app.use(function (err, req, res, next) {
 var debug = require("debug")("recuit-server:server");
 
 var fs = require("fs");
-// var https = require("https");
-var http = require("http");
+var https = require("https");
+//var http = require("http");
 
 const logger = require("../utils/logger");
 
 // var privateKey = fs.readFileSync("./cert/renego.live.key", "utf8");
 // var certificate = fs.readFileSync("./cert/renego.live.cer", "utf8");
 // var credentials = { key: privateKey, cert: certificate };
+const credentials = {
+  key: process.env.SSL_KEY,
+  cert: process.env.SSL_CERT,
+};
 
 /**
  * Get port from environment and store in Express.
@@ -79,8 +83,8 @@ app.set("port", port);
 /**
  * Create HTTP server.
  */
-// var server = https.createServer(credentials, app);
-var server = http.createServer(app);
+var server = https.createServer(credentials, app);
+//var server = http.createServer(app);
 //require("../socketIO/test")(server);
 require("../socketIO/socketIO_server")(server);
 
