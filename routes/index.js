@@ -64,6 +64,7 @@ router.post("/api/login", function (req, res) {
     function (err, userDoc) {
       if (userDoc) {
         res.cookie("userid", userDoc._id, { maxAge: 1000 * 60 * 60 * 24 }); //1 day
+        console.log("userid add into cookie" + userDoc._id); //test put userid into cookie
 
         const data = userDoc;
         res.send({ code: 0, data: data });
