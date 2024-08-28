@@ -8,13 +8,14 @@
   "dependencies": {
     "blueimp-md5": "^2.19.0",
     "cookie-parser": "~1.4.3",
+    "cors": "^2.8.5",
     "debug": "~2.6.9",
     "ejs": "~2.5.7",
     "express": "~4.16.0",
     "http-errors": "~1.6.2",
     "mongoose": "^6.2.9",
     "morgan": "~1.9.0",
-    "socket.io": "^2.1.0",
+    "socket.io": "2.5.0",
     "winston": "^3.7.2"
   },
   "devDependencies": {
