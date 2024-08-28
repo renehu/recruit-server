@@ -10,6 +10,15 @@ const logger = require("../utils/logger");
 
 const filter = { password: 0, __v: 0 }; // filter password value
 
+const cors = require("cors");
+router.use(
+  cors({
+    origin: "https://renehu.net",
+    methods: ["GET", "POST"],
+    credentials: true, //Access-Control-Allow-Credentials
+  })
+);
+
 /* GET home page. */
 router.get("/", function (req, res, next) {
   res.render("index", { title: "Express" });
