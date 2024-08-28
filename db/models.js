@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 mongoose.set("strictQuery", false);
-const config = require("./config");
+//const config = require("./config");
 //mongoose.connect("mongodb://localhost:27017/MongoDB");
 const MONGO_URI = process.env.MONGO_URI;
 
