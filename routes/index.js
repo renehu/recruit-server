@@ -13,9 +13,10 @@ const filter = { password: 0, __v: 0 }; // filter password value
 const cors = require("cors");
 router.use(
   cors({
-    origin: "https://renehu.net",
+    origin: ["https://renehu.net", "http://localhost:3000"],
     methods: ["GET", "POST"],
-    credentials: true, //Access-Control-Allow-Credentials
+    //credentials: true, //Access-Control-Allow-Credentials
+    credentials: false,
   })
 );
 
