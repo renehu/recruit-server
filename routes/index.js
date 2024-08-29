@@ -46,7 +46,7 @@ router.post("/api/register", function (req, res, next) {
           logger.error(`user registered error ${error}"`);
         } else {
           logger.info(`new user ${username} registered,  type:${type}`);
-          res.cookie("userid", userDoc._id, { maxAge: 1000 * 60 * 60 * 24 }); //1 day
+          res.cookie("userid", userDoc._id, { maxAge: 1000 * 60 * 3 }); // 3 min
           const data = { username, type, _id: userDoc._id };
           res.send({ code: 0, data: data });
         }
