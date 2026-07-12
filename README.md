@@ -1,6 +1,6 @@
 # Recruit Server
 
-A Node.js backend for the Recruit Client application, developed as a personal project while expanding my full-stack web development skills.
+A Node.js backend for the Recruit application, developed as a personal project while expanding my full-stack web development skills.
 
 This project provides RESTful APIs, user authentication, MongoDB data management, and real-time communication using Socket.IO. It serves as the backend service for the Recruit Client application.
 
@@ -34,17 +34,12 @@ https://renehu.net/recruit-client/#/login
 - Socket.IO
 - JSON Web Token (JWT)
 
-### Development Tools
-
-- Nodemon
-- npm
-
 ## API Overview
 
 The backend provides APIs for:
 
 - User authentication
-- Candidate management
+- Employee and employer management
 - Recruitment management
 - Real-time chat
 - Database operations
